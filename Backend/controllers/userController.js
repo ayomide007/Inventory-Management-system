@@ -86,7 +86,7 @@ const registerUser = asynchandler( async (req, res) => {
 
        // User exists, check if password is correct
 
-       const passwordIsCorrect =await bcrypt.compare(password,user.password)
+       const passwordIsCorrect = await bcrypt.compare(password,user.password)
 
        //Generate Login Token
        const token = generateToken(user._id)
@@ -222,8 +222,6 @@ const registerUser = asynchandler( async (req, res) => {
 
          // Delete token if it exists in DB
          let token = await Token.findOne({userId: user._id})
-         await token.delete()
-
          //create Reset token
          let resetToken = crypto.randomBytes(32).toString("hex") + user._id 
          
@@ -283,8 +281,7 @@ const registerUser = asynchandler( async (req, res) => {
             //Find Token in DB
             const userToken = await Token.findOne({
                 token: hashedToken,
-                expiresAt:{$gt: Date.now() 
-                }
+                expiresAt:{$gt: Date.now() }
             })
         
         if(!userToken){
