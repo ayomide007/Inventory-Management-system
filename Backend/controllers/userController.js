@@ -12,10 +12,10 @@ const generateToken = (id) => {
 return jwt.sign({id}, process.env.JWT_SECRET, {expiresIn:"1d"})
 };
 
-// register user
+// register user Function
 const registerUser = asynchandler( async (req, res) => {
     const{name, email, password} = req.body
-       //Validation
+       //Validation Check
        if(!name || !email || !password )  {
         res.status(400)
         throw new Error("Please fill in all required fields")
@@ -25,7 +25,7 @@ const registerUser = asynchandler( async (req, res) => {
             throw new Error ("password must be up to 6 characters ")
         }
 
-        //check if user email already exists
+        // Validation check if user email already exists
 
        const userExists = await User.findOne({email})
        if(userExists) {
@@ -33,7 +33,7 @@ const registerUser = asynchandler( async (req, res) => {
         throw new Error ("Email has already been registered")
        }
         
-       // create new user
+       // create new user 
 
        const user = await User.create({name, email, password,
     })

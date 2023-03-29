@@ -18,6 +18,7 @@ const app = express()
     app.use(express.urlencoded({extended:false}))
         app.use(bodyParser.json())
         app.use(cors());
+        
         //Route Middleware
 app.use("/api/users", userRoute);
 
@@ -28,7 +29,7 @@ app.use("/api/users", userRoute);
 //Error MiddleWare
     app.use(errorHandler);
 //connect to DB and start Server
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 3000;
 
 mongoose
     .connect(process.env.MONGO_URI)
