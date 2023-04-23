@@ -211,7 +211,7 @@ const registerUser = asynchandler( async (req, res) => {
 
     })
 
-    //forgot password 
+    //forgot password Process
     const forgotPassword = asynchandler (async (req, res) =>{
          const{email} =req.body
          const user  = await User.findOne({email})
@@ -226,8 +226,8 @@ const registerUser = asynchandler( async (req, res) => {
          let resetToken = crypto.randomBytes(32).toString("hex") + user._id 
          
             console.log(resetToken);
-         
-
+        
+ 
          //Hash token before Saving to DB
          const hashedToken = crypto.createHash("sha256").update(resetToken).digest("hex")
          //Save Token to DB
@@ -264,7 +264,6 @@ const registerUser = asynchandler( async (req, res) => {
                 }
                 
             
-            res.send("Forgot Password")
     })
 
     //Reset Password
@@ -278,7 +277,7 @@ const registerUser = asynchandler( async (req, res) => {
             .update("resetToken")
             .digest("hex")
         
-            //Find Token in DB
+            //Find Token in DB before reseting
             const userToken = await Token.findOne({
                 token: hashedToken,
                 expiresAt:{$gt: Date.now() }
