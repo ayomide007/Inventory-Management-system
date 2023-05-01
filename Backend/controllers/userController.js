@@ -86,7 +86,7 @@ const registerUser = asynchandler( async (req, res) => {
 
        // User exists, check if password is correct
 
-       const passwordIsCorrect = await bcrypt.compare(password,user.password)
+       const passwordIsCorrect = await bcrypt.compare(password, user.password)
 
        //Generate Login Token
        const token = generateToken(user._id)
@@ -213,7 +213,7 @@ const registerUser = asynchandler( async (req, res) => {
 
     //forgot password Process
     const forgotPassword = asynchandler (async (req, res) =>{
-         const{email} =req.body
+         const{email} = req.body
          const user  = await User.findOne({email})
          if(!user){
             res.status(404)
@@ -222,6 +222,7 @@ const registerUser = asynchandler( async (req, res) => {
 
          // Delete token if it exists in DB
          let token = await Token.findOne({userId: user._id})
+
          //create Reset token
          let resetToken = crypto.randomBytes(32).toString("hex") + user._id 
          
@@ -252,7 +253,7 @@ const registerUser = asynchandler( async (req, res) => {
                 <p> Regards ... </p>
                 <p> Inventory Team. </p>`;
                 const subject = "Password Reset Request"
-                const send_to = user.email
+                const send_to = user.email  
                 const sent_from = process.env.EMAIL_USER
  
                 try {
@@ -271,11 +272,11 @@ const registerUser = asynchandler( async (req, res) => {
             const {password} = req.body
             const {resetToken} = req.params
         
-            //Hash token then Compare to Token in DB
+            //Hash token,  then Compare to Token in DB
             const hashedToken = crypto
             .createHash("sha256")
-            .update("resetToken")
-            .digest("hex")
+            .update(resetToken)
+            .digest("hex");
         
             //Find Token in DB before reseting
             const userToken = await Token.findOne({
