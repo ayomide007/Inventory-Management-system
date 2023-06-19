@@ -32,17 +32,17 @@ price :{
     required: [true, "Please add a Price"],
     trim: true,
 }, 
-decription :{  
+description :{  
     type: String,
     required: [true, "Please add a Description"],
     trim: true,
 }, 
 image :{  
-    type: object,
+    type: Object,
    default: {}
-    
-   
 }, 
-})
+},{
+    timestamps: true,
+});
 const Product = mongoose.model("Product", productSchema)
-module.exports = Token 
+module.exports = Product;
