@@ -8,4 +8,5 @@ const { upload } = require("../utils/fileUpload");
 
 router.post("/", protect, upload.single("image"), createProduct) //upload.array for multiple file 
 
+//done
 module.exports = router
